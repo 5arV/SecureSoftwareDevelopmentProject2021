@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Deliveries</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Delivery</h1>
+    <table class="table">
+        <tbody id="deliveryTableBody">
+        <tr>
+            <td>ID</td>
+            <td th:text="${delivery.id}"></td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td th:text="${delivery.done}? 'Delivered' : 'Not deliverred'"></td>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td th:text="${delivery.date}"></td>
+        </tr>
+        <tr>
+            <td>To user</td>
+            <td th:text="${delivery.username}"></td>
+        </tr>
+        <tr>
+            <td>From restaurant</td>
+            <td th:text="${delivery.restaurantName}"></td>
+        </tr>
+        <tr>
+            <td>To address</td>
+            <td th:text="${delivery.address}"></td>
+        </tr>
+        <tr>
+            <td>Comment</td>
+            <td th:text="${delivery.comment}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h1>Delivery items</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Item id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Price</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="carsTableContent">
+        <tr th:each="deliveries: ${details}">
+            <td th:text="${deliveries.id}"></td>
+            <td th:text="${deliveries.foodName}"></td>
+            <td th:text="${deliveries.amount}"></td>
+            <td th:text="${deliveries.price}"></td>
+        </tr>
+        <tr>
+            <td></td><td></td><td>Total</td> <td th:text="${sum}">
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

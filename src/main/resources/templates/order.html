@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Car Details</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Make a new order</h1>
+    <div class="row">
+        <form method="post" th:action="'/new-order'">
+            <div class="form-group">
+                <label for="restaurant">Restaurant</label>
+                <select id="restaurant" name="restaurant" class="form-control" th:onselect="'onRestaurantSelect(${'+${}+'})'">
+                    <option disabled selected>Choose...</option>
+                    <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}" th:text="${restaurant.name}"></option>
+                </select>
+            </div>
+            <input type="submit" th:value="Submit"/>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    function onRestaurantSelect(id){
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Deliveries</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Deliveries</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Status</th>
+            <th scope="col">Date</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Restaurant</th>
+            <th scope="col">Address</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="carsTableContent">
+        <tr th:each="deliveries: ${deliveries}">
+            <td th:text="${deliveries.id}"></td>
+            <td th:text="${deliveries.done}? 'Delivered' : 'Not deliverred'"></td>
+            <td th:text="${deliveries.date}"></td>
+            <td th:text="${deliveries.username}"></td>
+            <td th:text="${deliveries.restaurantName}"></td>
+            <td th:text="${deliveries.address}"></td>
+            <td><a th:href="@{/delivery(id=${deliveries.id})}">Details</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <template id="row-template">
+        <tr>
+            <td>id</td>
+            <td>status</td>
+            <td>user</td>
+            <td>restaurant</td>
+        </tr>
+    </template>
+</div>
+</body>
+</html>

@@ -31,11 +31,11 @@ public class CarsController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/")
-    public String showSearch(Model model) {
-        model.addAttribute("cars", carRepository.getAll());
-        return "cars";
-    }
+//    @GetMapping("/")
+//    public String showSearch(Model model) {
+//        model.addAttribute("cars", carRepository.getAll());
+//        return "cars";
+//    }
 
     @GetMapping(value = "/api/cars/search", produces = "application/json")
     @ResponseBody
