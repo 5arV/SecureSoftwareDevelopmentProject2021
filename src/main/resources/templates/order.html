@@ -6,30 +6,144 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Car Details</title>
+    <title>New order</title>
+    <script>
+        function onRestaurantSelect() {
+            document.getElementById("menu").style.visibility = 'visible';
+            let restaurantId = document.getElementById("restaurant").value;
+            fetch('/api/menu?id=' + restaurantId)
+                .then(response => response.json())
+                .then(updateMenu);
+
+        }
+
+        function updateMenu(menu) {
+            cleanup();
+            menu.forEach((item) => {
+                const template = document.getElementById('menuTemplate');
+                const row = document.importNode(template.content, true);
+                const tds = row.querySelectorAll('td');
+                tds[0].textContent = item.name;
+                tds[1].firstChild.id = item.id;
+                const menu = document.getElementById('menuTable');
+                menu.appendChild(row);
+            });
+        }
+
+        function cleanup() {
+            document.getElementById('menuTable').innerHTML = '';
+        }
+
+        function checkAndSend() {
+            if (check()) {
+                send();
+            }
+        }
+
+        function check() {
+            let menu = document.querySelectorAll('.checkbox');
+            let allZeroCheck = true;
+            menu.forEach((item) => {
+                if (item.value < 0) {
+                    showError();
+                    return false;
+                }
+                if (item.value > 0) {
+                    allZeroCheck = false;
+                }
+            });
+            if (allZeroCheck) {
+                showError();
+                return false;
+            }
+            return true;
+
+        }
+
+        function send() {
+            let restaurant = document.getElementById('restaurant').value;
+            let comment = document.getElementById('comment').value;
+            let menu = document.querySelectorAll('.checkbox');
+            let filteredMenu = [];
+            menu.forEach((item) => {
+                if (item.value > 0) {
+                    filteredMenu.push({'id': item.id, 'amount': item.value});
+                }
+            })
+
+            let data = {
+                'restaurant': restaurant,
+                'comment': comment,
+                'items': filteredMenu
+            }
+
+            fetch('/api/new-order',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then(
+                (response) => {
+                    console.log(response);
+                }
+            );
+        }
+
+        function showError() {
+            alert('please provide valid values for the menu')
+        }
+
+    </script>
 </head>
 <body>
 <div layout:fragment="content">
     <h1>Make a new order</h1>
     <div class="row">
-        <form method="post" th:action="'/new-order'">
+        <div id="orderForm">
             <div class="form-group">
                 <label for="restaurant">Restaurant</label>
-                <select id="restaurant" name="restaurant" class="form-control" th:onselect="'onRestaurantSelect(${'+${}+'})'">
+                <select id="restaurant" name="restaurant" class="form-control" th:onchange="onRestaurantSelect()">
                     <option disabled selected>Choose...</option>
-                    <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}" th:text="${restaurant.name}"></option>
+                    <option th:each="restaurant : ${restaurants}" th:value="${restaurant.id}"
+                            th:text="${restaurant.name}"></option>
                 </select>
             </div>
-            <input type="submit" th:value="Submit"/>
-        </form>
-    </div>
+            <div id="menu" style="visibility:hidden">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td>Dish</td>
+                        <td>Amount</td>
+                    </tr>
+                    </thead>
+                    <tbody id="menuTable"></tbody>
+                </table>
+                <div class="form-group">
+                    <label>Additional Remark</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="comment">
+                </div>
 
+                <input type="submit" class="btn btn-primary" th:value="Submit" onclick="checkAndSend()"/>
+
+
+            </div>
+        </div>
+    </div>
+    <div>
+        <template id="menuTemplate">
+            <tr>
+                <td><label/></td>
+                <td><input class="checkbox" type="number" min="0"/></td>
+            </tr>
+        </template>
+
+    </div>
 </div>
 
-<script>
-    function onRestaurantSelect(id){
 
-    }
-</script>
 </body>
 </html>

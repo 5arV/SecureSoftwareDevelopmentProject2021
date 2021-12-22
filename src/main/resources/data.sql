@@ -49,17 +49,17 @@ values (1, TRUE , 2, 1, 1, '2021-12-2', 'Hurry up I am hungry'),
        (2, FALSE, 2, 1, 1, '2021-12-31', 'Just leave it at the door'),
        (3, FALSE, 2, 1, 1, '2021-12-31', '');
 
-insert into food(id, name, price)
-values (1, 'cevapi', 750),
-       (2, 'pljeskavica', 600),
-       (3, 'kajmak', 100),
-       (4, 'svadbarski kupus', 400),
-       (5, 'becka snicla', 1000),
-       (6, 'pica margarita', 800),
-       (7, 'pica vesuvo', 900),
-       (8, 'pica quattro formaggi', 850),
-       (9, 'pica quattro stagioni', 850),
-       (10, 'pica kulen', 900);
+insert into food(id, name, price, restaurantId)
+values (1, 'cevapi', 750, 1),
+       (2, 'pljeskavica', 600, 1),
+       (3, 'kajmak', 100, 1),
+       (4, 'svadbarski kupus', 400, 1),
+       (5, 'becka snicla', 1000, 1),
+       (6, 'pica margarita', 800, 2),
+       (7, 'pica vesuvo', 900, 2),
+       (8, 'pica quattro formaggi', 850, 2),
+       (9, 'pica quattro stagioni', 850, 2),
+       (10, 'pica kulen', 900, 2);
 
 insert into restaurant_type(id, name)
 values (1, 'restoran domace kuhinje'),

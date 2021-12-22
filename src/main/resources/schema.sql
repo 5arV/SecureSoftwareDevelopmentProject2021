@@ -69,9 +69,10 @@ create table delivery
 
 create table food
 (
-    id    int          NOT NULL,
-    name  varchar(255) NOT NULL,
-    price int          NOT NULL,
+    id           int          NOT NULL,
+    name         varchar(255) NOT NULL,
+    price        int          NOT NULL,
+    restaurantId int          NOT NULL,
     PRIMARY KEY (ID)
 );
 
