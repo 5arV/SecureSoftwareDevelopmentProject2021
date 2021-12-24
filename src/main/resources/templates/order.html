@@ -63,17 +63,19 @@
         function send() {
             let restaurant = document.getElementById('restaurant').value;
             let comment = document.getElementById('comment').value;
+            let address = document.getElementById('address').value;
             let menu = document.querySelectorAll('.checkbox');
             let filteredMenu = [];
             menu.forEach((item) => {
                 if (item.value > 0) {
-                    filteredMenu.push({'id': item.id, 'amount': item.value});
+                    filteredMenu.push({'foodId': item.id, 'amount': item.value});
                 }
             })
 
             let data = {
-                'restaurant': restaurant,
+                'restaurantId': restaurant,
                 'comment': comment,
+                'address': address,
                 'items': filteredMenu
             }
 
@@ -121,10 +123,19 @@
                     <tbody id="menuTable"></tbody>
                 </table>
                 <div class="form-group">
-                    <label>Additional Remark</label>
+                    <label>Address</label>
+
+                    <select id="address" name="address" class="form-control">
+                        <option th:each="address : ${addresses}" th:value="${address.id}"
+                                th:text="${address.name}"></option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <input type="text" id="comment">
+                    <label>Additional Remark</label>
+
+                    <div class="form-group">
+                        <input type="text" id="comment">
+                    </div>
                 </div>
 
                 <input type="submit" class="btn btn-primary" th:value="Submit" onclick="checkAndSend()"/>

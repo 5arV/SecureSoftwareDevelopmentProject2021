@@ -10,8 +10,11 @@ values (1, 'bruce', 'qw8Uxa2fXimKruS9wYEm4qm3ZaIGw/hJNvOG3PemhoA=', 'MEI4PU5hcHh
 
 insert into address (id, name, userId)
 values (1, 'Gotham City, Bat cave', 1 ),
-       (2, 'Redwood', 2),
-       (3, 'Batajnica, Srpskih vladara 25', 3);
+       (2, 'Beograd, Gazela', 1),
+       (3, 'Beogradska industrija piva', 1),
+       (4, 'Redwood', 2),
+       (5, 'Trg Nikole Pasica 3', 2),
+       (6, 'Batajnica, Srpskih vladara 25', 3);
 
 insert into roles(id, name)
 values (1, 'ADMIN'),

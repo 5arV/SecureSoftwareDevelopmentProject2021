@@ -1,23 +1,25 @@
 package com.zuehlke.securesoftwaredevelopment.domain;
 
-import java.util.List;
 
 public class NewOrder {
-    int restaurantId;
+    Integer restaurantId;
     String comment;
-    List<Integer> items;
+    Integer address;
+    FoodItem[] items;
 
-    public NewOrder(int restaurantId, String comment, List<Integer> items) {
+
+    public NewOrder(Integer restaurantId, String comment,  Integer address, FoodItem[] items) {
         this.restaurantId = restaurantId;
         this.comment = comment;
         this.items = items;
+        this.address = address;
     }
 
-    public int getRestaurantId() {
+    public Integer getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(int restaurantId) {
+    public void setRestaurantId(Integer restaurantId) {
         this.restaurantId = restaurantId;
     }
 
@@ -29,11 +31,19 @@ public class NewOrder {
         this.comment = comment;
     }
 
-    public List<Integer> getItems() {
+    public FoodItem[] getItems() {
         return items;
     }
 
-    public void setItems(List<Integer> items) {
+    public void setItems(FoodItem[] items) {
         this.items = items;
+    }
+
+    public Integer getAddress() {
+        return address;
+    }
+
+    public void setAddress(Integer address) {
+        this.address = address;
     }
 }

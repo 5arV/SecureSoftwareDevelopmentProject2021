@@ -91,7 +91,7 @@ public class CarsController {
 
     @PostMapping("/buy-car/{id}")
     public String buyCar(@PathVariable("id") int id, Address address, Model model) {
-        if (address.getAddress().length() < 10) {
+        if (address.getName().length() < 10) {
             return String.format("redirect:/buy-car/%s?addressError=true", id);
         }
 

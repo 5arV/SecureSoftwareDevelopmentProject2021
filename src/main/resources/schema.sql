@@ -57,7 +57,7 @@ create table role_to_permissions
 
 create table delivery
 (
-    id           int     NOT NULL,
+    id           int     NOT NULL AUTO_INCREMENT,
     isDone       boolean NOT NULL,
     userId       int     NOT NULL,
     restaurantId int     NOT NULL,
@@ -85,7 +85,7 @@ create table restaurant_type
 
 create table delivery_item
 (
-    id         int NOT NULL,
+    id         int NOT NULL AUTO_INCREMENT,
     amount     int NOT NULL,
     foodId     int NOT NULL,
     deliveryId int NOT NULL,
