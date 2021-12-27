@@ -19,7 +19,7 @@ public class DeliveryRepository {
 
     public List<ViewableDelivery> getAllDeliveries() {
         List<ViewableDelivery> deliveries = new ArrayList<>();
-        String sqlQuery = "SELECT d.id, d.isDone, d.date, d.comment, u.username, r.name, a.name FROM delivery AS d JOIN users AS u ON d.userId = u.id JOIN restaurant as r ON d.restaurantId = r.id JOIN address AS a ON d.addressId = a.id";
+        String sqlQuery = "SELECT d.id, d.isDone, d.date, d.comment, u.username, r.name, rt.name, a.name FROM delivery AS d JOIN users AS u ON d.userId = u.id JOIN restaurant as r ON d.restaurantId = r.id JOIN address AS a ON d.addressId = a.id JOIN restaurant_type AS rt ON r.typeId= rt.id";
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
@@ -43,12 +43,13 @@ public class DeliveryRepository {
         String comment = rs.getString(4);
         String username = rs.getString(5);
         String restaurantName = rs.getString(6);
-        String address = rs.getString(7);
-        return new ViewableDelivery(id, isDone, date, comment, username, address, restaurantName);
+        String restaurantType = rs.getString(7);
+        String address = rs.getString(8);
+        return new ViewableDelivery(id, isDone, date, comment, username, address, restaurantName, restaurantType);
     }
 
     public ViewableDelivery getDelivery(String id) {
-        String sqlQuery = "SELECT d.id, d.isDone, d.date, d.comment, u.username, r.name, a.name FROM delivery AS d JOIN users AS u ON d.userId = u.id JOIN restaurant as r ON d.restaurantId = r.id JOIN address AS a ON d.addressId = a.id WHERE d.id = " + id;
+        String sqlQuery = "SELECT d.id, d.isDone, d.date, d.comment, u.username, r.name, rt.name, a.name FROM delivery AS d JOIN users AS u ON d.userId = u.id JOIN restaurant as r ON d.restaurantId = r.id JOIN address AS a ON d.addressId = a.id JOIN restaurant_type AS rt ON r.typeId= rt.id WHERE d.id = " + id;
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
@@ -100,4 +101,25 @@ public class DeliveryRepository {
         }
         return sum;
     }
+
+
+    public List<ViewableDelivery> search(String searchQuery) throws SQLException {
+        List<ViewableDelivery> cars = new ArrayList<>();
+        String sqlQuery =
+                "SELECT d.id, d.isDone, d.date, d.comment, u.username, r.name, rt.name, a.name FROM delivery AS d JOIN users AS u ON d.userId = u.id JOIN restaurant as r ON d.restaurantId = r.id JOIN address AS a ON d.addressId = a.id JOIN restaurant_type AS rt ON r.typeId= rt.id" +
+                        " WHERE UPPER(d.comment) LIKE UPPER('%" + searchQuery + "%')"
+                        + "OR UPPER(u.username) LIKE UPPER('%" + searchQuery + "%')"
+                        + "OR UPPER(r.name) LIKE UPPER('%" + searchQuery + "%')"
+                        + "OR UPPER(rt.name) LIKE UPPER('%" + searchQuery + "%')"
+                        + "OR UPPER(a.name) LIKE UPPER('%" + searchQuery + "%')";
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(sqlQuery)) {
+            while (rs.next()) {
+                cars.add(createDelivery(rs));
+            }
+        }
+        return cars;
+    }
+
 }

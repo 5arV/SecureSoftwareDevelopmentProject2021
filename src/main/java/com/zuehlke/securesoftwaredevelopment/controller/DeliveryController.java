@@ -1,12 +1,15 @@
 package com.zuehlke.securesoftwaredevelopment.controller;
 
 import com.zuehlke.securesoftwaredevelopment.domain.DeliveryDetail;
+import com.zuehlke.securesoftwaredevelopment.domain.ViewableDelivery;
 import com.zuehlke.securesoftwaredevelopment.repository.DeliveryRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -31,5 +34,12 @@ public class DeliveryController {
         model.addAttribute("sum", deliveryRepository.calculateSum(details));
         return "delivery";
     }
+
+    @GetMapping(value = "/api/deliveries/search", produces = "application/json")
+    @ResponseBody
+    public List<ViewableDelivery> search(@RequestParam("query") String query) throws SQLException {
+        return deliveryRepository.search(query);
+    }
+
 
 }

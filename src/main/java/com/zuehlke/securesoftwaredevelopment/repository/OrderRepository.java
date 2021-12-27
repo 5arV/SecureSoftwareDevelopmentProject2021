@@ -21,28 +21,6 @@ public class OrderRepository {
         this.dataSource = dataSource;
     }
 
-    public List<Restaurant> getRestaurants() {
-        List<Restaurant> restaurants = new ArrayList<>();
-        String sqlQuery = "SELECT id, name FROM restaurant";
-        try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet rs = statement.executeQuery(sqlQuery)) {
-            while (rs.next()) {
-                restaurants.add(createRestaurant(rs));
-            }
-            return restaurants;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-
-    }
-
-    private Restaurant createRestaurant(ResultSet rs) throws SQLException {
-        int id = rs.getInt(1);
-        String name = rs.getString(2);
-        return new Restaurant(id, name);
-    }
 
     public List<Food> getMenu(String id) {
         List<Food> menu = new ArrayList<>();

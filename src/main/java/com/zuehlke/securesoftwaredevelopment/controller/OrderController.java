@@ -1,10 +1,10 @@
 package com.zuehlke.securesoftwaredevelopment.controller;
 
-import com.zuehlke.securesoftwaredevelopment.domain.Address;
 import com.zuehlke.securesoftwaredevelopment.domain.Food;
 import com.zuehlke.securesoftwaredevelopment.domain.NewOrder;
 import com.zuehlke.securesoftwaredevelopment.domain.User;
 import com.zuehlke.securesoftwaredevelopment.repository.OrderRepository;
+import com.zuehlke.securesoftwaredevelopment.repository.Customer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,9 +16,11 @@ import java.util.List;
 @Controller
 public class OrderController {
     private final OrderRepository orderRepository;
+    private final Customer customer;
 
-    public OrderController(OrderRepository orderRepository) {
+    public OrderController(OrderRepository orderRepository, Customer customer) {
         this.orderRepository = orderRepository;
+        this.customer = customer;
     }
 
     @GetMapping("/order")
@@ -26,7 +28,7 @@ public class OrderController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) authentication.getPrincipal();
 
-        model.addAttribute("restaurants", orderRepository.getRestaurants());
+        model.addAttribute("restaurants", customer.getRestaurants());
         model.addAttribute("addresses", orderRepository.getAddresses(user.getId()));
         return "order";
     }

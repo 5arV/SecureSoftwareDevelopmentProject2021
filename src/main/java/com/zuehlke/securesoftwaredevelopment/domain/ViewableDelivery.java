@@ -4,6 +4,7 @@ package com.zuehlke.securesoftwaredevelopment.domain;
 import java.sql.Date;
 
 public class ViewableDelivery {
+    private String restaurantType;
     private int id;
     private boolean isDone;
     private String username;
@@ -68,7 +69,15 @@ public class ViewableDelivery {
         this.comment = comment;
     }
 
-    public ViewableDelivery(int id, boolean isDone, Date date, String comment, String username, String address, String restaurantName) {
+    public String getRestaurantType() {
+        return restaurantType;
+    }
+
+    public void setRestaurantType(String restaurantType) {
+        this.restaurantType = restaurantType;
+    }
+
+    public ViewableDelivery(int id, boolean isDone, Date date, String comment, String username, String address, String restaurantName, String restaurantType) {
         this.id = id;
         this.isDone = isDone;
         this.username = username;
@@ -76,5 +85,6 @@ public class ViewableDelivery {
         this.restaurantName = restaurantName;
         this.date = date;
         this.comment = comment;
+        this.restaurantType = restaurantType;
     }
 }

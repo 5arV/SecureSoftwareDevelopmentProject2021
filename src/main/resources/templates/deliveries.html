@@ -7,6 +7,56 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Deliveries</title>
+    <script>
+        function search() {
+            clearSearchResults();
+            const searchQuery = getSearchQuery();
+            updateSearchTerm(searchQuery);
+            fetch(`/api/deliveries/search?query=${searchQuery}`)
+                .then(response => response.json())
+                .then(updateSearchResults);
+        }
+
+        function clearSearchResults() {
+            const table = document.querySelector('table');
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
+        }
+
+        function getSearchQuery() {
+            return document.getElementById('searchQuery').value;
+        }
+
+        function updateSearchTerm(searchQuery) {
+            const searchTerm = document.getElementById('searchTerm');
+            searchTerm.innerHTML = searchQuery;
+            searchTerm.parentElement.classList.remove('invisible');
+        }
+
+        function updateSearchResults(deliveries) {
+            deliveries.forEach(addRow);
+        }
+
+        function addRow(delivery) {
+            const template = document.getElementById('row-template');
+            const row = document.importNode(template.content, true);
+            const tds = row.querySelectorAll('td');
+
+            tds[0].textContent = delivery.id;
+            tds[1].textContent = delivery.done? 'Delivered' : 'Not delivered';
+            tds[2].textContent = delivery.date;
+            tds[3].textContent = delivery.username;
+            tds[4].textContent = delivery.restaurantName;
+            tds[5].textContent = delivery.restaurantType;
+            tds[6].textContent = delivery.address;
+            tds[7].innerHTML = `<a href="/delivery?id=${delivery.id}">Details</a>`;
+
+            const tbody = document.querySelector('tbody');
+            tbody.appendChild(row);
+        }
+
+    </script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -19,6 +69,7 @@
             <th scope="col">Date</th>
             <th scope="col">Customer</th>
             <th scope="col">Restaurant</th>
+            <th scope="col">Restaurant type</th>
             <th scope="col">Address</th>
             <th></th>
         </tr>
@@ -26,22 +77,35 @@
         <tbody id="carsTableContent">
         <tr th:each="deliveries: ${deliveries}">
             <td th:text="${deliveries.id}"></td>
-            <td th:text="${deliveries.done}? 'Delivered' : 'Not deliverred'"></td>
+            <td th:text="${deliveries.done}? 'Delivered' : 'Not delivered'"></td>
             <td th:text="${deliveries.date}"></td>
             <td th:text="${deliveries.username}"></td>
             <td th:text="${deliveries.restaurantName}"></td>
+            <td th:text="${deliveries.restaurantType}"></td>
             <td th:text="${deliveries.address}"></td>
             <td><a th:href="@{/delivery(id=${deliveries.id})}">Details</a></td>
         </tr>
         </tbody>
     </table>
-
+    <div class="input-group mb-3">
+        <input type="text" id="searchQuery" class="form-control">
+        <div class="input-group-append">
+            <button class="btn btn-outline-primary" id="carSearchButton" type="button" onclick="search()">Search
+            </button>
+        </div>
+    </div>
+    <p class="invisible">You searched for: <span id="searchTerm"></span></p>
     <template id="row-template">
         <tr>
             <td>id</td>
-            <td>status</td>
-            <td>user</td>
-            <td>restaurant</td>
+            <td>delivered</td>
+            <td>date</td>
+            <td>username</td>
+            <td>restaurantName</td>
+            <td>restaurantType</td>
+            <td>type</td>
+            <td>address</td>
+            <td>details</td>
         </tr>
     </template>
 </div>
