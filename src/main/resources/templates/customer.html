@@ -1,10 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Deliveries</title>
+    <script>
+        function deleteCustomer(customerId) {
+            fetch('/customer?id=' + customerId, {
+                method: 'DELETE'
+            }).then(function () {
+                window.location.href = '/customers-and-restaurants';
+            });
+        }
+
+        function deleteAddress(addressId) {
+            fetch('/customer/address?id=' + addressId, {
+                method: 'DELETE'
+            }).then(function () {
+                window.location.href = '';
+            });
+        }
+    </script>
 </head>
 <body>
+<div layout:fragment="content">
+    <h1>User info</h1>
+    <div class="row">
+        <form method="POST" action="/api/customer/update-customer" class="col-5">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="form-control" id="username" th:value="${customer.username}">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="text" name="password" class="form-control" id="password" th:value="${customer.password}">
+            </div>
+            <input type="hidden" name="id" class="form-control" id="id" th:value="${customer.id}">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
 
+    <div class="row">
+        <div class="form-group">
+            <button type="submit" class="btn btn-danger" id="deleteUser"
+                    th:onclick="'deleteCustomer(\''+ ${customer.id} +'\')'">Delete
+            </button>
+        </div>
+    </div>
+    <h1>Addresses</h1>
+    <table>
+        <tr th:each="address: ${addresses}">
+            <form method="POST" action="/api/customer/address/update-address" class="col-5">
+                <td><input name="name" th:value="${address.name}"/>
+                    <input type="hidden" name="id" th:value="${address.id}"/></td>
+                <td>
+                    <button class="btn btn-primary">Save</button>
+                </td>
+            </form>
+            <td>
+                <button class="btn btn-danger" th:onclick="'deleteAddress(\''+ ${address.id} +'\')'">Delete</button>
+            </td>
+        </tr>
+    </table>
+    <h1>Add new address</h1>
+    <table>
+        <form method="POST" action="/customer/address" class="col-5">
+            <tr>
+                <td><input name="name"></td>
+                <input type="hidden" name="userId" th:value="${customer.id}"/></td>
+                <td>
+                    <button class="btn btn-primary">Save</button>
+                </td>
+            </tr>
+        </form>
+    </table>
+</div>
 </body>
-</html>

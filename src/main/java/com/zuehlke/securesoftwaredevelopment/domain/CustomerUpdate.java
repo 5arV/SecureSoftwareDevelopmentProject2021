@@ -1,26 +1,13 @@
 package com.zuehlke.securesoftwaredevelopment.domain;
 
-public class Customer {
-    Integer id;
-    String username;
-    String password;
+public class CustomerUpdate {
+    private int id;
+    private String username;
+    private String password;
 
-    public Customer(Integer id, String username) {
-        this.id = id;
-        this.username = username;
-    }
-
-    public Customer(Integer id, String username, String password) {
-        this.id = id;
+    public CustomerUpdate(int id, String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -38,5 +25,13 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
