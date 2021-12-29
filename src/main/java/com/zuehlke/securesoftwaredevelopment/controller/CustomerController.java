@@ -41,7 +41,8 @@ public class CustomerController {
 
     @DeleteMapping("/restaurant")
     public String deleteRestaurant(@RequestParam(name = "id", required = true) String id) {
-        customerRepository.deleteRestaurant(id);
+        int identificator = Integer.valueOf(id);
+        customerRepository.deleteRestaurant(identificator);
         return "/customers-and-restaurants";
     }
 
@@ -74,7 +75,8 @@ public class CustomerController {
 
     @DeleteMapping("/customer/address")
     public String deleteCustomerAddress(@RequestParam(name = "id", required = true) String id) {
-        customerRepository.deleteCustomerAddress(id);
+        int identificator = Integer.valueOf(id);
+        customerRepository.deleteCustomerAddress(identificator);
         return "/customers-and-restaurants";
     }
 

@@ -37,7 +37,8 @@ public class OrderController {
     @GetMapping(value = "/api/menu", produces = "application/json")
     @ResponseBody
     public List<Food> getMenu(@RequestParam(name="id") String id){
-        return orderRepository.getMenu(id);
+        int identificator = Integer.valueOf(id);
+        return orderRepository.getMenu(identificator);
     }
 
     @PostMapping(value = "/api/new-order", consumes = "application/json")

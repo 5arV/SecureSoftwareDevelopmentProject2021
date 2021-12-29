@@ -22,7 +22,7 @@ public class OrderRepository {
     }
 
 
-    public List<Food> getMenu(String id) {
+    public List<Food> getMenu(int id) {
         List<Food> menu = new ArrayList<>();
         String sqlQuery = "SELECT id, name FROM food WHERE restaurantId=" + id;
         try (Connection connection = dataSource.getConnection();

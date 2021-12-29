@@ -96,7 +96,7 @@ public class CustomerRepository {
         return null;
     }
 
-    public void deleteRestaurant(String id) {
+    public void deleteRestaurant(int id) {
         String query = "DELETE FROM restaurant WHERE id=" + id;
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()
@@ -188,7 +188,7 @@ public class CustomerRepository {
         return new Address(id, name);
     }
 
-    public void deleteCustomerAddress(String id) {
+    public void deleteCustomerAddress(int id) {
         String query = "DELETE FROM address WHERE id=" + id;
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()
