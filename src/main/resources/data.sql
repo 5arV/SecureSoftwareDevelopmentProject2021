@@ -17,35 +17,19 @@ values (1, 'Gotham City, Bat cave', 1 ),
        (6, 'Batajnica, Srpskih vladara 25', 3);
 
 insert into roles(id, name)
-values (1, 'ADMIN'),
-       (2, 'CUSTOMER'),
-       (3, 'RESTAURANT');
+values (1, 'CUSTOMER');
 
 insert into user_to_roles(userId, roleId)
 values (1, 1),
-       (2, 2),
-       (3, 3);
+       (2, 1),
+       (3, 1);
 
 insert into permissions(id, name)
-values (1, 'CAR_LIST_VIEW'),
-       (2, 'CAR_SEARCH'),
-       (3, 'CAR_BUY'),
-       (4, 'COMMENT_VIEW'),
-       (5, 'COMMENT_ADD'),
-       (6, 'CAR_DETAILS_VIEW'),
-       (7, 'CAR_DETAILS_EDIT'),
-       (8, 'USER_PROFILE_VIEW'),
-       (9, 'USER_LIST_VIEW'),
-       (10, 'USER_SEARCH'),
-       (11, 'USER_PROMOTE_TO_SELLER'),
-       (12, 'OWN_PROFILE_VIEW'),
-       (13, 'OWN_PROFILE_EDIT'),
-       (14, 'CAR_WHOLESALE_PRICE_VIEW');
+values (1, 'ORDER_FOOD');
 
 insert into role_to_permissions(roleId, permissionId)
 values (1, 1),
        (2, 1);
-
 
 insert into delivery(id, isDone, userId, restaurantId, addressId, date, comment)
 values (1, TRUE , 2, 1, 1, '2021-12-2', 'Hurry up I am hungry'),
@@ -53,24 +37,24 @@ values (1, TRUE , 2, 1, 1, '2021-12-2', 'Hurry up I am hungry'),
        (3, FALSE, 2, 1, 1, '2021-12-31', '');
 
 insert into food(id, name, price, restaurantId)
-values (1, 'cevapi', 750, 1),
-       (2, 'pljeskavica', 600, 1),
-       (3, 'kajmak', 100, 1),
-       (4, 'svadbarski kupus', 400, 1),
-       (5, 'becka snicla', 1000, 1),
-       (6, 'pica margarita', 800, 2),
-       (7, 'pica vesuvo', 900, 2),
-       (8, 'pica quattro formaggi', 850, 2),
-       (9, 'pica quattro stagioni', 850, 2),
-       (10, 'pica kulen', 900, 2);
+values (1, 'Cevapi', 750, 1),
+       (2, 'Pljeskavica', 600, 1),
+       (3, 'Kajmak', 100, 1),
+       (4, 'Svadbarski kupus', 400, 1),
+       (5, 'Becka snicla', 1000, 1),
+       (6, 'Pizza Margaritha', 800, 2),
+       (7, 'Pizza Vesuvio', 900, 2),
+       (8, 'Pizza Quattro Formaggi', 850, 2),
+       (9, 'Pizza Quattro Stagioni', 850, 2),
+       (10, 'Pizza kulen', 900, 2);
 
 insert into restaurant_type(id, name)
 values (1, 'restoran domace kuhinje'),
-       (2, 'pica bar');
+       (2, 'pizza bar');
 
 insert into restaurant(id, name, address, typeid)
-values (1, 'Moj Zavicaj', 'Maksima Gorkog 12, Beograd', 1),
-       (2, 'Pica industrija', 'Obilicev venac 5, Beograd', 2);
+values (1, 'Moj zavicaj', 'Maksima Gorkog 12, Beograd', 1),
+       (2, 'Pizza industrija', 'Obilicev venac 5, Beograd', 2);
 
 insert into delivery_item(id, amount, foodId, deliveryId)
 values (1, 2, 1, 1),
@@ -78,5 +62,3 @@ values (1, 2, 1, 1),
        (3, 1, 4, 2),
        (4, 1, 5, 2),
        (5, 2, 10, 3);
-
-
